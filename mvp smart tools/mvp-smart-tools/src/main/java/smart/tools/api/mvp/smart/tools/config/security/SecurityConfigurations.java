@@ -1,8 +1,10 @@
 package smart.tools.api.mvp.smart.tools.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -18,6 +20,12 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     @Autowired
     private AutenticacaoService autenticacaoService;
 
+    @Override
+    @Bean
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
+
     //configurações autenticação
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -28,13 +36,17 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/v1/clientes").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/v1/clientes/*").permitAll()
-                .antMatchers("/h2/*").permitAll()
-                .anyRequest().authenticated()
-                .and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
+                .antMatchers(HttpMethod.GET, "/clientes/").permitAll()
+                .antMatchers(HttpMethod.POST, "/autenticacao").permitAll()
+                .antMatchers(HttpMethod.POST, "/autenticacao/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/usuarios/**").permitAll()
+                .antMatchers(HttpMethod.GET
+                        , "/usuarios").permitAll()
+                .antMatchers(HttpMethod.GET, "/h2").permitAll()
+                .antMatchers(HttpMethod.GET, "/h2/**").permitAll()
+                .anyRequest().authenticated().and().csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().headers().frameOptions().sameOrigin();
     }
 
     // configurações para recursos estáticos(js, css, img, etc)
@@ -42,7 +54,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
     }
 
-//    public static void main(String[] args) {
-//        System.out.println(new BCryptPasswordEncoder().encode("12345"));
-//    }
+    public static void main(String[] args) {
+        System.out.println(new BCryptPasswordEncoder().encode("12345"));
+    }
 }
