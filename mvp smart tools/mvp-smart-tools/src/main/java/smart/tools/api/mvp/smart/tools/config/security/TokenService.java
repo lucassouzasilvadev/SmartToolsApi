@@ -1,5 +1,6 @@
 package smart.tools.api.mvp.smart.tools.config.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import smart.tools.api.mvp.smart.tools.model.Usuario;
 
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class TokenService {
@@ -31,5 +33,19 @@ public class TokenService {
                 .setExpiration(dataExpiração)
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
+    }
+
+    public boolean isTokenValido(String token) {
+        try{
+            Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public Integer getIdUsuario(String token) {
+        Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
+        return Integer.parseInt(claims.getId());
     }
 }

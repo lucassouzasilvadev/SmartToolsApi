@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import smart.tools.api.mvp.smart.tools.repository.UsuarioRepository;
 
 @EnableWebSecurity
 @Configuration //acho que não precisa dessa notação
@@ -19,6 +21,12 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AutenticacaoService autenticacaoService;
+
+    @Autowired
+    private TokenService tokenService;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Override
     @Bean
@@ -40,16 +48,17 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/autenticacao").permitAll()
                 .antMatchers(HttpMethod.POST, "/autenticacao/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/usuarios/**").permitAll()
-                .antMatchers(HttpMethod.GET
-                        , "/usuarios").permitAll()
+                .antMatchers(HttpMethod.GET, "/usuarios").permitAll()
                 .antMatchers(HttpMethod.GET, "/h2").permitAll()
                 .antMatchers(HttpMethod.GET, "/h2/**").permitAll()
                 .anyRequest().authenticated().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().headers().frameOptions().sameOrigin();
+                .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
+               // .and().headers().frameOptions().sameOrigin();
     }
 
     // configurações para recursos estáticos(js, css, img, etc)
+    //basicamento não usamos esta merda
     @Override
     public void configure(WebSecurity web) throws Exception {
     }
