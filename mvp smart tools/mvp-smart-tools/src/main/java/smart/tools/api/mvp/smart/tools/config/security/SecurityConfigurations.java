@@ -48,7 +48,9 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/autenticacao").permitAll()
                 .antMatchers(HttpMethod.POST, "/autenticacao/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/usuarios/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/usuarios/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/usuarios").permitAll()
+                .antMatchers(HttpMethod.POST, "/usuarios").permitAll()
                 .antMatchers(HttpMethod.GET, "/h2").permitAll()
                 .antMatchers(HttpMethod.GET, "/h2/**").permitAll()
                 .anyRequest().authenticated().and().csrf().disable()
@@ -63,7 +65,12 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
     }
 
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
     public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder().encode("12345"));
+        System.out.println(new BCryptPasswordEncoder().encode("305040"));
     }
 }
