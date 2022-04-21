@@ -1,11 +1,9 @@
 package smart.tools.api.mvp.smart.tools.model;
 
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
+import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,13 +14,22 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class Usuario implements UserDetails{
+@AllArgsConstructor
+@NoArgsConstructor
+public class Usuario implements UserDetails {
+
+    private static final long serialVersionUID = 1L;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    private String nome;
+    private String nomeOficina;
+
+    private String cnpj;
+
+    private String telefone;
     private String email;
     private String senha;
 
