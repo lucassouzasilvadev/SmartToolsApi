@@ -6,9 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import smart.tools.api.mvp.smart.tools.model.Cliente;
 import smart.tools.api.mvp.smart.tools.repository.ClienteRepository;
+import smart.tools.api.mvp.smart.tools.service.ClienteService;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/clientes")
@@ -17,34 +18,29 @@ public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private ClienteService clienteService;
+
     @GetMapping
-    public ResponseEntity listar(){
-        List<Cliente> clientes = new ArrayList<>();
-        if (!clientes.isEmpty()){
-            return ResponseEntity.status(200).body(clientes);
-        }
-        return ResponseEntity.noContent().build();
+    public ResponseEntity listarClientes(){
+       List<Cliente> clientes = clienteService.buscarClientes();
+       if (!clientes.isEmpty()){
+           return ResponseEntity.noContent().build();
+       }
+
+       return ResponseEntity.status(200).body(clientes);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity listarClientesPorId(@PathVariable Integer id){
-        Cliente cliente = new Cliente();
-        if (cliente.getId().equals(id)){
-            return ResponseEntity.status(200).body(clienteRepository.findById(id));
-        }
-        return ResponseEntity.noContent().build();
+        Optional<Cliente> cliente = clienteService.buscarClientePorId(id);
+        return ResponseEntity.status(200).body(cliente);
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> cadastrarCliente(@RequestBody Cliente novoCliente){
-        boolean emailEmUso = clienteRepository.findByEmail(novoCliente.getEmail())
-                .stream()
-                .anyMatch(clienteExiste -> !clienteExiste.equals(novoCliente));
-
-        if (emailEmUso){
-             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoCliente);
+    public ResponseEntity cadastrarCliente(@RequestBody Cliente novoCliente){
+        Cliente cliente = clienteService.cadastrarCliente(novoCliente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
     }
 
     @PutMapping("/{id}")
@@ -53,7 +49,7 @@ public class ClienteController {
             return ResponseEntity.notFound().build();
         }
         clienteAtualizado.setId(id);
-        clienteRepository.save(clienteAtualizado);
+        clienteAtualizado = clienteRepository.save(clienteAtualizado);
         return ResponseEntity.status(200).body(clienteAtualizado);
     }
 
@@ -62,7 +58,7 @@ public class ClienteController {
         if (!clienteRepository.existsById(id)){
             return ResponseEntity.notFound().build();
         }
-        clienteRepository.deleteById(id);
+        clienteService.excluirCliente(id);
         return ResponseEntity.noContent().build();
     }
 

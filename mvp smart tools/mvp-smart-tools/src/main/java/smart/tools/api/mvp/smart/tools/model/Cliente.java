@@ -20,14 +20,16 @@ public class Cliente {
     @Column(name = "nome_cliente")
     private String nome;
 
+    @Column(name = "telefone_cliente")
+    private String telefone;
+
+
     @Column(name = "cpf_cliente")
     private String cpf;
 
-    @Column(name = "data_nascimento")
-    private LocalDate dataNascimento;
+//    @Column(name = "data_nascimento")
+//    private LocalDate dataNascimento;
 
-    @Column(name = "telefone_cliente")
-    private String telefone;
 
     @Column(name = "email_cliente")
     private String email;
@@ -55,14 +57,6 @@ public class Cliente {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
     }
 
     public String getTelefone() {
