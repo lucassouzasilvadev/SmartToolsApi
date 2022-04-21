@@ -23,8 +23,9 @@ public class Veiculo {
     private String tipoVeiculo;
     @Column(name = "placa_veiculo")
     private String placaVeiculo;
+
     @ManyToOne
-    private Usuario usuario;
+    private Cliente cliente;
 
     public Integer getIdVeiculo() {
         return idVeiculo;
@@ -66,11 +67,11 @@ public class Veiculo {
         this.placaVeiculo = placaVeiculo;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

@@ -62,6 +62,4 @@ public class ClienteController {
         return ResponseEntity.noContent().build();
     }
 
-
-
 }

@@ -54,7 +54,7 @@ public class LancamentoController {
                 return ResponseEntity.notFound().build();
             }
             lancamento.setId(id);
-            lancamento = lancamentoRepository.save(lancamento);
+            lancamentoRepository.save(lancamento);
             return ResponseEntity.ok(lancamento);
     }
 
