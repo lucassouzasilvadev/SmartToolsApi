@@ -11,15 +11,12 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class Usuario implements UserDetails {
 
     private static final long serialVersionUID = 1L;
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,5 +66,62 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNomeOficina() {
+        return nomeOficina;
+    }
+
+    public void setNomeOficina(String nomeOficina) {
+        this.nomeOficina = nomeOficina;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public List<Perfil> getPerfis() {
+        return perfis;
+    }
+
+    public void setPerfis(List<Perfil> perfis) {
+        this.perfis = perfis;
     }
 }

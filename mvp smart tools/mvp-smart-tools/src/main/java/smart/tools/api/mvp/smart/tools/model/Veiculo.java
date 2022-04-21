@@ -5,8 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,5 +26,51 @@ public class Veiculo {
     @ManyToOne
     private Usuario usuario;
 
+    public Integer getIdVeiculo() {
+        return idVeiculo;
+    }
 
+    public void setIdVeiculo(Integer idVeiculo) {
+        this.idVeiculo = idVeiculo;
+    }
+
+    public String getMarcaVeiculo() {
+        return marcaVeiculo;
+    }
+
+    public void setMarcaVeiculo(String marcaVeiculo) {
+        this.marcaVeiculo = marcaVeiculo;
+    }
+
+    public String getModeloVeiculo() {
+        return modeloVeiculo;
+    }
+
+    public void setModeloVeiculo(String modeloVeiculo) {
+        this.modeloVeiculo = modeloVeiculo;
+    }
+
+    public String getTipoVeiculo() {
+        return tipoVeiculo;
+    }
+
+    public void setTipoVeiculo(String tipoVeiculo) {
+        this.tipoVeiculo = tipoVeiculo;
+    }
+
+    public String getPlacaVeiculo() {
+        return placaVeiculo;
+    }
+
+    public void setPlacaVeiculo(String placaVeiculo) {
+        this.placaVeiculo = placaVeiculo;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }
