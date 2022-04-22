@@ -15,7 +15,6 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-
     @Transactional
     public Cliente cadastrarCliente(Cliente cliente){
         return clienteRepository.save(cliente);

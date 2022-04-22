@@ -22,13 +22,18 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping
-    public ResponseEntity listarClientes(){
-       List<Cliente> clientes = clienteService.buscarClientes();
-       if (!clientes.isEmpty()){
-           return ResponseEntity.noContent().build();
-       }
+    public ResponseEntity listarClientes(String cpf){
+        if (cpf == null){
+            List<Cliente> clientes = clienteService.buscarClientes();
+            if (clientes.isEmpty()){
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.status(200).body(clientes);
+        }else {
+            List<Cliente> cliente = clienteRepository.findByCpf(cpf);
+            return ResponseEntity.status(200).body(cliente);
+        }
 
-       return ResponseEntity.status(200).body(clientes);
     }
 
     @GetMapping("/{id}")
