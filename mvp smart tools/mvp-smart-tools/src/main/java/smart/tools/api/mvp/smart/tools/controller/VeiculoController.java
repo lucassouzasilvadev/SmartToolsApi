@@ -3,7 +3,9 @@ package smart.tools.api.mvp.smart.tools.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import smart.tools.api.mvp.smart.tools.form.VeiculoForm;
 import smart.tools.api.mvp.smart.tools.model.Veiculo;
+import smart.tools.api.mvp.smart.tools.repository.ClienteRepository;
 import smart.tools.api.mvp.smart.tools.repository.VeiculoRepository;
 import smart.tools.api.mvp.smart.tools.service.VeiculoService;
 
@@ -19,6 +21,9 @@ public class VeiculoController {
 
     @Autowired
     private VeiculoService veiculoService;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
 
 
     @GetMapping
@@ -37,8 +42,9 @@ public class VeiculoController {
     }
 
     @PostMapping
-    public ResponseEntity cadastrarVeiculo(@RequestBody Veiculo novoVeiculo){
-        Veiculo veiculo = veiculoService.cadastrarVeiculo(novoVeiculo);
+    public ResponseEntity cadastrarVeiculo(@RequestBody VeiculoForm veiculoForm){
+        Veiculo veiculo = veiculoForm.converter(clienteRepository);
+        veiculoRepository.save(veiculo);
         return ResponseEntity.status(201).body(veiculo);
     }
 

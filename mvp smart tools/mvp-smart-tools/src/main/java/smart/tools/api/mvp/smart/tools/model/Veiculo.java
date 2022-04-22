@@ -7,7 +7,6 @@ import javax.persistence.*;
 @Entity
 @EqualsAndHashCode
 @AllArgsConstructor
-@NoArgsConstructor
 public class Veiculo {
 
     @Id
@@ -26,6 +25,17 @@ public class Veiculo {
 
     @ManyToOne
     private Cliente cliente;
+
+    public Veiculo() {
+    }
+
+    public Veiculo(String marcaVeiculo, String modeloVeiculo, String tipoVeiculo, String placaVeiculo, Cliente cliente) {
+        this.marcaVeiculo = marcaVeiculo;
+        this.modeloVeiculo = modeloVeiculo;
+        this.tipoVeiculo = tipoVeiculo;
+        this.placaVeiculo = placaVeiculo;
+        this.cliente = cliente;
+    }
 
     public Integer getIdVeiculo() {
         return idVeiculo;

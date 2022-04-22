@@ -8,7 +8,6 @@ import smart.tools.api.mvp.smart.tools.model.TipoLancamento;
 import smart.tools.api.mvp.smart.tools.repository.LancamentoRepository;
 import smart.tools.api.mvp.smart.tools.service.LancamentoService;
 
-import javax.persistence.Enumerated;
 import java.util.List;
 import java.util.Optional;
 
