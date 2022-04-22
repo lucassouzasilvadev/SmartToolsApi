@@ -4,9 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import smart.tools.api.mvp.smart.tools.model.Lancamento;
+import smart.tools.api.mvp.smart.tools.model.TipoLancamento;
 import smart.tools.api.mvp.smart.tools.repository.LancamentoRepository;
 import smart.tools.api.mvp.smart.tools.service.LancamentoService;
 
+import javax.persistence.Enumerated;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,12 +36,17 @@ public class LancamentoController {
     }
 
     @GetMapping
-    public ResponseEntity buscarLancamentos(){
-        List<Lancamento> lancamentos = lancamentoService.buscarLancamentos();
-        if (lancamentos.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    public ResponseEntity buscarLancamentos(String tipoLancamento){
+        if (tipoLancamento == null){
+            List<Lancamento> lancamentos = lancamentoService.buscarLancamentos();
+            if (lancamentos.isEmpty()){
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
+            return ResponseEntity.status(200).body(lancamentos);
         }
-        return ResponseEntity.status(200).body(lancamentos);
+
+        List<Lancamento> lancamentoPorTipo = lancamentoRepository.findByTipoLancamento(TipoLancamento.valueOf(tipoLancamento.toUpperCase()));
+        return ResponseEntity.status(200).body(lancamentoPorTipo);
     }
 
     @GetMapping("/{id}")
