@@ -1,9 +1,12 @@
 package smart.tools.api.mvp.smart.tools.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -27,13 +30,37 @@ public class Cliente {
     @Column(name = "cpf_cliente")
     private String cpf;
 
-//    @Column(name = "data_nascimento")
-//    private LocalDate dataNascimento;
-
 
     @Column(name = "email_cliente")
     private String email;
 
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Veiculo> veiculos = new ArrayList<>();
+
+    public Cliente(String nome, String telefone, String cpf, String email) {
+        this.nome = nome;
+        this.telefone = telefone;
+        this.cpf = cpf;
+        this.email = email;
+    }
+
+    public Cliente(String nome, String telefone, String cpf, String email, List<Veiculo> veiculos) {
+        this.nome = nome;
+        this.telefone = telefone;
+        this.cpf = cpf;
+        this.email = email;
+        this.veiculos = veiculos;
+    }
+
+
+    public List<Veiculo> getVeiculos() {
+        return veiculos;
+    }
+
+    public void setVeiculos(List<Veiculo> veiculos) {
+        this.veiculos = veiculos;
+    }
 
     public Integer getId() {
         return id;

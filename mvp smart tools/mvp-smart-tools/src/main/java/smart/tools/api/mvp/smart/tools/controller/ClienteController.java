@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import smart.tools.api.mvp.smart.tools.form.ClienteForm;
 import smart.tools.api.mvp.smart.tools.model.Cliente;
 import smart.tools.api.mvp.smart.tools.repository.ClienteRepository;
+import smart.tools.api.mvp.smart.tools.repository.VeiculoRepository;
 import smart.tools.api.mvp.smart.tools.service.ClienteService;
 
 import java.util.List;
@@ -17,6 +19,9 @@ public class ClienteController {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private VeiculoRepository veiculoRepository;
 
     @Autowired
     private ClienteService clienteService;
@@ -43,8 +48,9 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity cadastrarCliente(@RequestBody Cliente novoCliente){
-        Cliente cliente = clienteService.cadastrarCliente(novoCliente);
+    public ResponseEntity cadastrarCliente(@RequestBody ClienteForm novoCliente){
+        Cliente cliente = novoCliente.converter();
+        clienteService.cadastrarCliente(cliente);
         return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
     }
 

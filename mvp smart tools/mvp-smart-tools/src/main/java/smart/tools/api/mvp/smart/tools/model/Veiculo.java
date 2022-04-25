@@ -1,5 +1,6 @@
 package smart.tools.api.mvp.smart.tools.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,10 +24,15 @@ public class Veiculo {
     @Column(name = "placa_veiculo")
     private String placaVeiculo;
 
+
+
     @ManyToOne
+    @JoinColumn(name = "id_cliente")
+    @JsonBackReference
     private Cliente cliente;
 
     public Veiculo() {
+
     }
 
     public Veiculo(String marcaVeiculo, String modeloVeiculo, String tipoVeiculo, String placaVeiculo, Cliente cliente) {
