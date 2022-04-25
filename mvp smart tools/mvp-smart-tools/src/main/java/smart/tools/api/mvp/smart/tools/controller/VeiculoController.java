@@ -27,12 +27,16 @@ public class VeiculoController {
 
 
     @GetMapping
-    public ResponseEntity buscarVeiculos(){
-        List<Veiculo> veiculos = veiculoService.buscarVeiculos();
-        if (veiculos.isEmpty()){
-            return ResponseEntity.noContent().build();
+    public ResponseEntity buscarVeiculos(String placa){
+        if (placa == null){
+            List<Veiculo> veiculos = veiculoService.buscarVeiculos();
+            if (veiculos.isEmpty()){
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.status(200).body(veiculos);
         }
-        return ResponseEntity.status(200).body(veiculos);
+        List<Veiculo> veiculoPorPlaca = veiculoRepository.findByPlacaVeiculo(placa);
+        return ResponseEntity.status(200).body(veiculoPorPlaca);
     }
 
     @GetMapping("/{id}")
