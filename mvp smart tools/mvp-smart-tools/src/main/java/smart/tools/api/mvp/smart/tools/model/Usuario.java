@@ -33,6 +33,15 @@ public class Usuario implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Perfil> perfis = new ArrayList<>();
 
+
+    public Usuario(String nomeOficina, String cnpj, String telefone, String email, String senha) {
+        this.nomeOficina = nomeOficina;
+        this.cnpj = cnpj;
+        this.telefone = telefone;
+        this.email = email;
+        this.senha = senha;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.perfis;

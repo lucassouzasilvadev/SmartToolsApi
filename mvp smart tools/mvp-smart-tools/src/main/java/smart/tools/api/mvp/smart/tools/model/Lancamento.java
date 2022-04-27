@@ -3,9 +3,13 @@ package smart.tools.api.mvp.smart.tools.model;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.apache.tomcat.jni.Local;
+
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 @Entity
@@ -21,7 +25,7 @@ public class Lancamento {
     private Integer id;
 
     @Column(name = "data_registro_extrato")
-    private OffsetDateTime dataRegistro;
+    private LocalDate dataRegistro;
 
     @Column(name = "valor_lancamento_extrato")
     private Double valor;
@@ -37,12 +41,12 @@ public class Lancamento {
 
     public void receita(){
         setTipoLancamento(TipoLancamento.RECEITA);
-        setDataRegistro(OffsetDateTime.now());
+        //setDataRegistro(LocalDate.now());
     }
 
     public void despesa(){
         setTipoLancamento(TipoLancamento.DESPESA);
-        setDataRegistro(OffsetDateTime.now());
+        setDataRegistro(LocalDate.now());
     }
 
     public Integer getId() {
@@ -53,11 +57,11 @@ public class Lancamento {
         this.id = id;
     }
 
-    public OffsetDateTime getDataRegistro() {
+    public LocalDate getDataRegistro() {
         return dataRegistro;
     }
 
-    public void setDataRegistro(OffsetDateTime dataRegistro) {
+    public void setDataRegistro(LocalDate dataRegistro) {
         this.dataRegistro = dataRegistro;
     }
 

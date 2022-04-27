@@ -1,6 +1,7 @@
 package smart.tools.api.mvp.smart.tools.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +19,7 @@ import smart.tools.api.mvp.smart.tools.form.LoginForm;
 
 @RestController
 @RequestMapping("/autenticacao")
+@Profile("prod")
 public class AutenticacaoController {
 
     @Autowired

@@ -18,46 +18,16 @@ import smart.tools.api.mvp.smart.tools.repository.UsuarioRepository;
 
 @EnableWebSecurity
 @Configuration //acho que não precisa dessa notação
-@Profile("prod")
-public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private AutenticacaoService autenticacaoService;
-
-    @Autowired
-    private TokenService tokenService;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Override
-    @Bean
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
-    }
-
-    //configurações autenticação
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(autenticacaoService).passwordEncoder(new BCryptPasswordEncoder());
-    }
+@Profile("dev")
+public class DevSecurityConfigurations extends WebSecurityConfigurerAdapter {
 
     //configurações de autorização
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/clientes/").permitAll()
-                .antMatchers(HttpMethod.POST, "/autenticacao").permitAll()
-                .antMatchers(HttpMethod.POST, "/autenticacao/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/usuarios/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/usuarios/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/usuarios").permitAll()
-                .antMatchers(HttpMethod.POST, "/usuarios").permitAll()
-                .antMatchers(HttpMethod.GET, "/h2").permitAll()
-                .antMatchers(HttpMethod.GET, "/h2/**").permitAll()
-                .anyRequest().authenticated().and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
+                .antMatchers("/**/").permitAll()
+                .antMatchers("/**").permitAll()
+                .and().csrf().disable();
                // .and().headers().frameOptions().sameOrigin();
     }
 
