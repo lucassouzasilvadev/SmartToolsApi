@@ -3,7 +3,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import smart.tools.api.mvp.smart.tools.controller.dto.Categoria;
 import smart.tools.api.mvp.smart.tools.controller.dto.ResumoCategoria;
 import smart.tools.api.mvp.smart.tools.controller.dto.ResumoLancamento;
 import smart.tools.api.mvp.smart.tools.model.Lancamento;
@@ -12,7 +11,6 @@ import smart.tools.api.mvp.smart.tools.repository.LancamentoRepository;
 import smart.tools.api.mvp.smart.tools.service.LancamentoService;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

@@ -1,9 +1,4 @@
 package smart.tools.api.mvp.smart.tools.controller.dto;
-
-import smart.tools.api.mvp.smart.tools.model.Lancamento;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class ResumoCategoria {
