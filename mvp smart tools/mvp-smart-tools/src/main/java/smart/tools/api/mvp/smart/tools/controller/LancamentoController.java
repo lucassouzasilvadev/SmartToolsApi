@@ -3,10 +3,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import smart.tools.api.mvp.smart.tools.controller.dto.ResumoCategoria;
 import smart.tools.api.mvp.smart.tools.controller.dto.ResumoLancamento;
+import smart.tools.api.mvp.smart.tools.form.LancamentoForm;
 import smart.tools.api.mvp.smart.tools.model.Lancamento;
 import smart.tools.api.mvp.smart.tools.model.TipoLancamento;
+import smart.tools.api.mvp.smart.tools.repository.CategoriaRepository;
 import smart.tools.api.mvp.smart.tools.repository.LancamentoRepository;
 import smart.tools.api.mvp.smart.tools.service.LancamentoService;
 
@@ -24,16 +25,23 @@ public class LancamentoController {
     @Autowired
     private LancamentoRepository lancamentoRepository;
 
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
     @PostMapping("/receitas")
-    public ResponseEntity criarEntrada(@RequestBody Lancamento novoLancamento){
-        Lancamento novaEntrada = lancamentoService.criarEntrada(novoLancamento);
+    public ResponseEntity criarEntrada(@RequestBody LancamentoForm novoLancamento){
+        Lancamento novaEntrada = novoLancamento.converter(categoriaRepository);
+        novaEntrada.receita();
+        lancamentoRepository.save(novaEntrada);
         return ResponseEntity.status(201).body(novaEntrada);
     }
 
 
     @PostMapping("/despesas")
-    public ResponseEntity criarSaida(@RequestBody Lancamento novoLancamento){
-        Lancamento novaDespesa = lancamentoService.criarSaida(novoLancamento);
+    public ResponseEntity criarSaida(@RequestBody LancamentoForm novoLancamento){
+        Lancamento novaDespesa = novoLancamento.converter(categoriaRepository);
+        novaDespesa.despesa();
+        lancamentoRepository.save(novaDespesa);
         return ResponseEntity.status(201).body(novaDespesa);
     }
 
@@ -64,27 +72,6 @@ public class LancamentoController {
         return ResponseEntity.ok(lancamentos);
     }
 
-    @GetMapping("/resumo-periodo")
-    public ResponseEntity  resumoPeriodo(String dataInicio, String dataFim){
-        ResumoLancamento resumoLancamento = lancamentoService.resumoPeriodo(dataInicio, dataFim);
-        return ResponseEntity.ok(resumoLancamento);
-    }
-
-    @GetMapping("/resumo-categoria")
-    public ResponseEntity resumoPorCategoria(String categoria){
-        List<Lancamento> lancamentos = lancamentoRepository.findByCategoria(categoria);
-        if (!lancamentos.isEmpty()){
-            String categorias = "";
-            Double total = 0.0;
-            for (Lancamento l : lancamentos){
-                categorias = l.getCategoria();
-                total += l.getValor();
-            }
-            return ResponseEntity.ok(new ResumoCategoria(categorias, total));
-        }
-        return ResponseEntity.notFound().build();
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity buscarLancamentoPorId(@PathVariable Integer id){
        Optional<Lancamento> lancamento = lancamentoService.buscarLancamentoPorId(id);
@@ -100,7 +87,6 @@ public class LancamentoController {
             lancamentoRepository.save(lancamento);
             return ResponseEntity.ok(lancamento);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity excluirLancamento(@PathVariable Integer id){

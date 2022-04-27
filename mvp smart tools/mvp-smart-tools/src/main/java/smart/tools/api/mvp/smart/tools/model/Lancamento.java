@@ -33,15 +33,22 @@ public class Lancamento {
     @Column(name = "descricao_extrato")
     private String descricao;
 
-    @Column(name = "categoria_extrato")
-    private String categoria;
+    @ManyToOne
+    @JoinColumn(name = "id_categoria")
+    private Categoria categoria;
 
     @Enumerated(EnumType.STRING)
     private TipoLancamento tipoLancamento;
 
+    public Lancamento(Double valor, String descricao, Categoria categoria) {
+        this.valor = valor;
+        this.descricao = descricao;
+        this.categoria = categoria;
+    }
+
     public void receita(){
         setTipoLancamento(TipoLancamento.RECEITA);
-        //setDataRegistro(LocalDate.now());
+        setDataRegistro(LocalDate.now());
     }
 
     public void despesa(){
@@ -81,11 +88,11 @@ public class Lancamento {
         this.descricao = descricao;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 
