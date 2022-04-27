@@ -4,6 +4,7 @@ import smart.tools.api.mvp.smart.tools.model.Lancamento;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ResumoCategoria {
     private String categoria;
@@ -28,5 +29,18 @@ public class ResumoCategoria {
 
     public void setTotal(Double total) {
         this.total = total;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ResumoCategoria that = (ResumoCategoria) o;
+        return Objects.equals(categoria, that.categoria) && Objects.equals(total, that.total);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(categoria, total);
     }
 }

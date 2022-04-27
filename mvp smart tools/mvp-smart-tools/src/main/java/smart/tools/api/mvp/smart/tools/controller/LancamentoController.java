@@ -74,20 +74,24 @@ public class LancamentoController {
 
     @GetMapping("/resumo-categoria")
     public ResponseEntity resumoPorCategoria(String categoria){
-        return null;
+        List<Lancamento> lancamentos = lancamentoRepository.findByCategoria(categoria);
+        if (!lancamentos.isEmpty()){
+            String categorias = "";
+            Double total = 0.0;
+            for (Lancamento l : lancamentos){
+                categorias = l.getCategoria();
+                total += l.getValor();
+            }
+            return ResponseEntity.ok(new ResumoCategoria(categorias, total));
+        }
+        return ResponseEntity.notFound().build();
     }
-
-
-
-
-
 
     @GetMapping("/{id}")
     public ResponseEntity buscarLancamentoPorId(@PathVariable Integer id){
        Optional<Lancamento> lancamento = lancamentoService.buscarLancamentoPorId(id);
        return ResponseEntity.status(200).body(lancamento);
     }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<Lancamento> atualizarLancamento(@PathVariable Integer id, @RequestBody Lancamento lancamento){
