@@ -34,6 +34,7 @@ public class Cliente {
     @Column(name = "email_cliente")
     private String email;
 
+
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Veiculo> veiculos = new ArrayList<>();

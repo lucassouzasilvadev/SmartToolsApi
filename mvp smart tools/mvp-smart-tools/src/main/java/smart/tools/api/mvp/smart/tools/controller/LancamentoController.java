@@ -4,7 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import smart.tools.api.mvp.smart.tools.controller.dto.ResumoLancamento;
+import smart.tools.api.mvp.smart.tools.controller.dto.SaldoCategoria;
 import smart.tools.api.mvp.smart.tools.form.LancamentoForm;
+import smart.tools.api.mvp.smart.tools.model.Categoria;
 import smart.tools.api.mvp.smart.tools.model.Lancamento;
 import smart.tools.api.mvp.smart.tools.model.TipoLancamento;
 import smart.tools.api.mvp.smart.tools.repository.CategoriaRepository;
@@ -12,6 +14,7 @@ import smart.tools.api.mvp.smart.tools.repository.LancamentoRepository;
 import smart.tools.api.mvp.smart.tools.service.LancamentoService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +36,7 @@ public class LancamentoController {
         Lancamento novaEntrada = novoLancamento.converter(categoriaRepository);
         novaEntrada.receita();
         lancamentoRepository.save(novaEntrada);
-        return ResponseEntity.status(201).body(novaEntrada);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novaEntrada);
     }
 
 
@@ -42,7 +45,7 @@ public class LancamentoController {
         Lancamento novaDespesa = novoLancamento.converter(categoriaRepository);
         novaDespesa.despesa();
         lancamentoRepository.save(novaDespesa);
-        return ResponseEntity.status(201).body(novaDespesa);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novaDespesa);
     }
 
     @GetMapping
@@ -76,6 +79,11 @@ public class LancamentoController {
     public ResponseEntity buscarLancamentoPorId(@PathVariable Integer id){
        Optional<Lancamento> lancamento = lancamentoService.buscarLancamentoPorId(id);
        return ResponseEntity.status(200).body(lancamento);
+    }
+
+    @GetMapping("/saldo-categoria")
+    public ResponseEntity buscarSaldoPorCategoria(){
+       return null;
     }
 
     @PutMapping("/{id}")

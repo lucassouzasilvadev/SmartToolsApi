@@ -1,9 +1,11 @@
 package smart.tools.api.mvp.smart.tools.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @EqualsAndHashCode
@@ -23,6 +25,9 @@ public class Veiculo {
     @Column(name = "placa_veiculo")
     private String placaVeiculo;
 
+    @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Servico> servicos;
 
 
     @ManyToOne

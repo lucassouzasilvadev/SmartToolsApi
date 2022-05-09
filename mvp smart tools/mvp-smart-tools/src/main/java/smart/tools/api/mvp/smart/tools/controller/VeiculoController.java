@@ -35,7 +35,7 @@ public class VeiculoController {
             }
             return ResponseEntity.status(200).body(veiculos);
         }
-        List<Veiculo> veiculoPorPlaca = veiculoRepository.findByPlacaVeiculo(placa);
+        Veiculo veiculoPorPlaca = veiculoRepository.findByPlacaVeiculo(placa);
         return ResponseEntity.status(200).body(veiculoPorPlaca);
     }
 
