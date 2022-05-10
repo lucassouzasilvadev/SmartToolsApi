@@ -3,12 +3,15 @@ package smart.tools.api.mvp.smart.tools.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import smart.tools.api.mvp.smart.tools.controller.dto.ListagemServicos;
 import smart.tools.api.mvp.smart.tools.form.VeiculoForm;
+import smart.tools.api.mvp.smart.tools.model.Servico;
 import smart.tools.api.mvp.smart.tools.model.Veiculo;
 import smart.tools.api.mvp.smart.tools.repository.ClienteRepository;
 import smart.tools.api.mvp.smart.tools.repository.VeiculoRepository;
 import smart.tools.api.mvp.smart.tools.service.VeiculoService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +38,7 @@ public class VeiculoController {
             }
             return ResponseEntity.status(200).body(veiculos);
         }
-        List<Veiculo> veiculoPorPlaca = veiculoRepository.findByPlacaVeiculo(placa);
+        Veiculo veiculoPorPlaca = veiculoRepository.findByPlacaVeiculo(placa);
         return ResponseEntity.status(200).body(veiculoPorPlaca);
     }
 
@@ -43,6 +46,17 @@ public class VeiculoController {
     public ResponseEntity buscarVeiculoPorId(@PathVariable Integer id){
         Optional<Veiculo> veiculo = veiculoService.buscarVeiculoPorId(id);
         return ResponseEntity.status(200).body(veiculo);
+    }
+
+    @GetMapping("/servicos")
+    public ResponseEntity buscarVeiculoEServico(String placaVeiculo){
+        Veiculo veiculo = veiculoRepository.findByPlacaVeiculo(placaVeiculo);
+        List<Servico> novo = veiculo.getServicos();
+        List<ListagemServicos> lista = new ArrayList<>();
+        for (Servico s : novo){
+            lista.add(new ListagemServicos(s.getOrdemServico(), veiculo.getPlacaVeiculo(), s.getDataServico(), s.getStatusServico()));
+        }
+        return ResponseEntity.ok(lista);
     }
 
     @PostMapping
