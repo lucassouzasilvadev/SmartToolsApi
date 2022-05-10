@@ -25,15 +25,14 @@ public class Veiculo {
     @Column(name = "placa_veiculo")
     private String placaVeiculo;
 
-    @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Servico> servicos;
-
-
     @ManyToOne
     @JoinColumn(name = "id_cliente")
     @JsonBackReference
     private Cliente cliente;
+
+    @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Servico> servicos;
 
     public Veiculo() {
 
@@ -94,4 +93,13 @@ public class Veiculo {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+    public List<Servico> getServicos() {
+        return servicos;
+    }
+
+    public void setServicos(List<Servico> servicos) {
+        this.servicos = servicos;
+    }
+
+
 }

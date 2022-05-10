@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Entity
 @Table(name = "tb_servico")
@@ -37,7 +38,8 @@ public class Servico {
     private Categoria categoria;
 
     @ManyToOne
-    @JoinColumn(name = "id_veiculo")
+    @JoinColumn(name = "id_cliente")
     @JsonBackReference
     private Veiculo veiculo;
+
 }

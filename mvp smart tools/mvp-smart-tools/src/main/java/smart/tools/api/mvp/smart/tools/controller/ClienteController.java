@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import smart.tools.api.mvp.smart.tools.controller.dto.ListagemServicos;
 import smart.tools.api.mvp.smart.tools.form.ClienteForm;
 import smart.tools.api.mvp.smart.tools.model.Cliente;
+import smart.tools.api.mvp.smart.tools.model.Veiculo;
 import smart.tools.api.mvp.smart.tools.repository.ClienteRepository;
 import smart.tools.api.mvp.smart.tools.repository.VeiculoRepository;
 import smart.tools.api.mvp.smart.tools.service.ClienteService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

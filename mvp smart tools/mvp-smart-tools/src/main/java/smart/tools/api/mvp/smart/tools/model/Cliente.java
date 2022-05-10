@@ -39,6 +39,7 @@ public class Cliente {
     @JsonManagedReference
     private List<Veiculo> veiculos = new ArrayList<>();
 
+
     public Cliente(String nome, String telefone, String cpf, String email) {
         this.nome = nome;
         this.telefone = telefone;

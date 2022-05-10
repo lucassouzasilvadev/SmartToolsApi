@@ -7,6 +7,8 @@ import smart.tools.api.mvp.smart.tools.repository.CategoriaRepository;
 import smart.tools.api.mvp.smart.tools.repository.LancamentoRepository;
 import smart.tools.api.mvp.smart.tools.repository.VeiculoRepository;
 import java.time.LocalDate;
+import java.util.concurrent.ThreadLocalRandom;
+
 @Getter
 @Setter
 public class ServicoForm {
@@ -24,7 +26,7 @@ public class ServicoForm {
         Categoria categoria = categoriaRepository.findByNome(this.categoria);
         Servico servico = new Servico();
         servico.setDataServico(LocalDate.now());
-        servico.setOrdemServico(101010101);
+        servico.setOrdemServico(ThreadLocalRandom.current().nextInt(1, 1000));
         servico.setStatusServico(StatusServico.PENDENTE);
         servico.setValorServico(valorServico);
         servico.setDescricao(descricao);
