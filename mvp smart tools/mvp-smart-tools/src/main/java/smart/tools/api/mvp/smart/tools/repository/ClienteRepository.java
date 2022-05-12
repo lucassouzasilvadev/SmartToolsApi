@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import smart.tools.api.mvp.smart.tools.model.Cliente;
 import smart.tools.api.mvp.smart.tools.model.Lancamento;
+import smart.tools.api.mvp.smart.tools.model.Usuario;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,5 +19,9 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
     List<Cliente> findByCpf(String cpf);
 
     Cliente findByNomeAndCpf(String nome, String cpf);
+
+    List<Cliente> findByUsuario(Usuario usuario);
+
+    List<Cliente> findByUsuarioAndCpf(Usuario usuario, String cpf);
 
 }

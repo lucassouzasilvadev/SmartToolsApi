@@ -2,15 +2,10 @@ package smart.tools.api.mvp.smart.tools.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import smart.tools.api.mvp.smart.tools.controller.dto.ListagemServicos;
-import smart.tools.api.mvp.smart.tools.model.Servico;
-import smart.tools.api.mvp.smart.tools.model.StatusServico;
 import smart.tools.api.mvp.smart.tools.model.Veiculo;
 import smart.tools.api.mvp.smart.tools.repository.VeiculoRepository;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

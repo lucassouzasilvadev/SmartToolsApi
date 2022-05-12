@@ -3,13 +3,11 @@ package smart.tools.api.mvp.smart.tools.model;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.apache.tomcat.jni.Local;
 
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 
 @Entity
@@ -37,10 +35,14 @@ public class Lancamento {
     @JoinColumn(name = "id_categoria")
     private Categoria categoria;
 
+    @ManyToOne
+    private Usuario usuario;
+
+
     @Enumerated(EnumType.STRING)
     private TipoLancamento tipoLancamento;
 
-    public Lancamento(Double valor, String descricao, Categoria categoria) {
+    public Lancamento(Double valor, String descricao, Categoria categoria ) {
         this.valor = valor;
         this.descricao = descricao;
         this.categoria = categoria;
@@ -102,5 +104,13 @@ public class Lancamento {
 
     public void setTipoLancamento(TipoLancamento tipoLancamento) {
         this.tipoLancamento = tipoLancamento;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

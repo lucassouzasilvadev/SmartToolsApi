@@ -1,4 +1,4 @@
-package smart.tools.api.mvp.smart.tools.controller.dto;
+package smart.tools.api.mvp.smart.tools.controller.responses;
 import java.util.Objects;
 
 public class ResumoCategoria {

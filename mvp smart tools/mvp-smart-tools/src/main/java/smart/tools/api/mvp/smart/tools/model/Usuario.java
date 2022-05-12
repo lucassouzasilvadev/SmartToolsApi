@@ -1,6 +1,7 @@
 package smart.tools.api.mvp.smart.tools.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,6 +30,10 @@ public class Usuario implements UserDetails {
     private String telefone;
     private String email;
     private String senha;
+
+    @JsonIgnore
+    @Column(length = 20_000_000)
+    private byte[] fotoPerfil;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Perfil> perfis = new ArrayList<>();

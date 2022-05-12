@@ -2,7 +2,7 @@ package smart.tools.api.mvp.smart.tools.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import smart.tools.api.mvp.smart.tools.controller.dto.ResumoLancamento;
+import smart.tools.api.mvp.smart.tools.controller.responses.ResumoLancamento;
 import smart.tools.api.mvp.smart.tools.model.Lancamento;
 import smart.tools.api.mvp.smart.tools.model.TipoLancamento;
 import smart.tools.api.mvp.smart.tools.repository.LancamentoRepository;

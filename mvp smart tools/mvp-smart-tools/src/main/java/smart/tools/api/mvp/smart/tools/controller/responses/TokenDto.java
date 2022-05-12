@@ -1,7 +1,6 @@
-package smart.tools.api.mvp.smart.tools.controller.dto;
+package smart.tools.api.mvp.smart.tools.controller.responses;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class TokenDto {

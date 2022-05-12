@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import smart.tools.api.mvp.smart.tools.service.UserService;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -41,5 +42,7 @@ public class Servico {
     @JoinColumn(name = "id_cliente")
     @JsonBackReference
     private Veiculo veiculo;
+
+
 
 }

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import smart.tools.api.mvp.smart.tools.config.security.TokenService;
-import smart.tools.api.mvp.smart.tools.controller.dto.TokenDto;
-import smart.tools.api.mvp.smart.tools.form.LoginForm;
+import smart.tools.api.mvp.smart.tools.controller.responses.TokenDto;
+import smart.tools.api.mvp.smart.tools.controller.form.LoginForm;
 
 
 @RestController

@@ -1,4 +1,4 @@
-package smart.tools.api.mvp.smart.tools.form;
+package smart.tools.api.mvp.smart.tools.controller.form;
 
 import lombok.Getter;
 import lombok.Setter;

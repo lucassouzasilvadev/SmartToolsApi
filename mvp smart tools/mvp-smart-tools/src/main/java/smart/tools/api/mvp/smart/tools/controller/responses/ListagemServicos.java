@@ -1,4 +1,4 @@
-package smart.tools.api.mvp.smart.tools.controller.dto;
+package smart.tools.api.mvp.smart.tools.controller.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class ListagemServicos {
 
+    private Integer id;
     private Integer ordemServico;
     private String placaCarro;
     private LocalDate data;

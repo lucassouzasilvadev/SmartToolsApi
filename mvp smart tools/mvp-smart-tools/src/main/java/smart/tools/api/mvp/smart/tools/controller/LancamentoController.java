@@ -3,18 +3,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import smart.tools.api.mvp.smart.tools.controller.dto.ResumoLancamento;
-import smart.tools.api.mvp.smart.tools.controller.dto.SaldoCategoria;
-import smart.tools.api.mvp.smart.tools.form.LancamentoForm;
-import smart.tools.api.mvp.smart.tools.model.Categoria;
+import smart.tools.api.mvp.smart.tools.controller.responses.ResumoLancamento;
+import smart.tools.api.mvp.smart.tools.controller.form.LancamentoForm;
 import smart.tools.api.mvp.smart.tools.model.Lancamento;
 import smart.tools.api.mvp.smart.tools.model.TipoLancamento;
+import smart.tools.api.mvp.smart.tools.model.Usuario;
 import smart.tools.api.mvp.smart.tools.repository.CategoriaRepository;
 import smart.tools.api.mvp.smart.tools.repository.LancamentoRepository;
+import smart.tools.api.mvp.smart.tools.repository.UsuarioRepository;
 import smart.tools.api.mvp.smart.tools.service.LancamentoService;
+import smart.tools.api.mvp.smart.tools.service.UserService;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,10 +31,15 @@ public class LancamentoController {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     @PostMapping("/receitas")
     public ResponseEntity criarEntrada(@RequestBody LancamentoForm novoLancamento){
         Lancamento novaEntrada = novoLancamento.converter(categoriaRepository);
         novaEntrada.receita();
+        Usuario usuario = usuarioRepository.findById(UserService.authenticated().getId()).get();
+        novaEntrada.setUsuario(usuario);
         lancamentoRepository.save(novaEntrada);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaEntrada);
     }
@@ -44,21 +49,24 @@ public class LancamentoController {
     public ResponseEntity criarSaida(@RequestBody LancamentoForm novoLancamento){
         Lancamento novaDespesa = novoLancamento.converter(categoriaRepository);
         novaDespesa.despesa();
+        Usuario usuario = usuarioRepository.findById(UserService.authenticated().getId()).get();
+        novaDespesa.setUsuario(usuario);
         lancamentoRepository.save(novaDespesa);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaDespesa);
     }
 
     @GetMapping
     public ResponseEntity buscarLancamentos(String tipoLancamento){
+        Usuario usuario = usuarioRepository.findById(UserService.authenticated().getId()).get();
         if (tipoLancamento == null){
-            List<Lancamento> lancamentos = lancamentoService.buscarLancamentos();
+            List<Lancamento> lancamentos = lancamentoRepository.findByUsuario(usuario);
             if (lancamentos.isEmpty()){
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
             return ResponseEntity.status(200).body(lancamentos);
         }
 
-        List<Lancamento> lancamentoPorTipo = lancamentoRepository.findByTipoLancamento(TipoLancamento.valueOf(tipoLancamento.toUpperCase()));
+        List<Lancamento> lancamentoPorTipo = lancamentoRepository.findByTipoLancamentoAndUsuario(TipoLancamento.valueOf(tipoLancamento.toUpperCase()), usuario);
         return ResponseEntity.status(200).body(lancamentoPorTipo);
     }
 
@@ -79,11 +87,6 @@ public class LancamentoController {
     public ResponseEntity buscarLancamentoPorId(@PathVariable Integer id){
        Optional<Lancamento> lancamento = lancamentoService.buscarLancamentoPorId(id);
        return ResponseEntity.status(200).body(lancamento);
-    }
-
-    @GetMapping("/saldo-categoria")
-    public ResponseEntity buscarSaldoPorCategoria(){
-       return null;
     }
 
     @PutMapping("/{id}")

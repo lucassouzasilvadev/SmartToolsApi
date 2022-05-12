@@ -34,6 +34,9 @@ public class Cliente {
     @Column(name = "email_cliente")
     private String email;
 
+    @ManyToOne
+    private Usuario usuario;
+
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     @JsonManagedReference
@@ -102,5 +105,13 @@ public class Cliente {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

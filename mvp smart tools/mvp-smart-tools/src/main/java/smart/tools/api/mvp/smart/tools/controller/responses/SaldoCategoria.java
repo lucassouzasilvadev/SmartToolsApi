@@ -1,6 +1,4 @@
-package smart.tools.api.mvp.smart.tools.controller.dto;
-
-import smart.tools.api.mvp.smart.tools.model.Categoria;
+package smart.tools.api.mvp.smart.tools.controller.responses;
 
 public class SaldoCategoria {
 

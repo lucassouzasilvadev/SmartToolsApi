@@ -1,4 +1,4 @@
-package smart.tools.api.mvp.smart.tools.form;
+package smart.tools.api.mvp.smart.tools.controller.form;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import smart.tools.api.mvp.smart.tools.model.Usuario;

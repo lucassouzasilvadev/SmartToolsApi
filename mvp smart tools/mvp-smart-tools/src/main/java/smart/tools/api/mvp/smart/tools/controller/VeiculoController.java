@@ -3,8 +3,8 @@ package smart.tools.api.mvp.smart.tools.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import smart.tools.api.mvp.smart.tools.controller.dto.ListagemServicos;
-import smart.tools.api.mvp.smart.tools.form.VeiculoForm;
+import smart.tools.api.mvp.smart.tools.controller.responses.ListagemServicos;
+import smart.tools.api.mvp.smart.tools.controller.form.VeiculoForm;
 import smart.tools.api.mvp.smart.tools.model.Servico;
 import smart.tools.api.mvp.smart.tools.model.Veiculo;
 import smart.tools.api.mvp.smart.tools.repository.ClienteRepository;
@@ -54,7 +54,7 @@ public class VeiculoController {
         List<Servico> novo = veiculo.getServicos();
         List<ListagemServicos> lista = new ArrayList<>();
         for (Servico s : novo){
-            lista.add(new ListagemServicos(s.getOrdemServico(), veiculo.getPlacaVeiculo(), s.getDataServico(), s.getStatusServico()));
+            lista.add(new ListagemServicos(s.getId(), s.getOrdemServico(), veiculo.getPlacaVeiculo(), s.getDataServico(), s.getStatusServico()));
         }
         return ResponseEntity.ok(lista);
     }

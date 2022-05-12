@@ -1,4 +1,4 @@
-package smart.tools.api.mvp.smart.tools.controller.dto;
+package smart.tools.api.mvp.smart.tools.controller.responses;
 
 public class ResumoLancamento {
 

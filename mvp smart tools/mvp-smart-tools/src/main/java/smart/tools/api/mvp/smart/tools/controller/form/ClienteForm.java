@@ -1,6 +1,7 @@
-package smart.tools.api.mvp.smart.tools.form;
+package smart.tools.api.mvp.smart.tools.controller.form;
 
 import smart.tools.api.mvp.smart.tools.model.Cliente;
+import smart.tools.api.mvp.smart.tools.model.Usuario;
 
 import javax.persistence.Column;
 
