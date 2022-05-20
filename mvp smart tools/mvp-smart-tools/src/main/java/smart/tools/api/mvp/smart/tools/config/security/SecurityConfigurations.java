@@ -18,7 +18,6 @@ import smart.tools.api.mvp.smart.tools.repository.UsuarioRepository;
 
 @EnableWebSecurity
 @Configuration //acho que não precisa dessa notação
-@Profile("prod")
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
     @Autowired
