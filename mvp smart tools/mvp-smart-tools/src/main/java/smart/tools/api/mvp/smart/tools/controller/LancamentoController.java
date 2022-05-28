@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import smart.tools.api.mvp.smart.tools.controller.responses.LancamentoDataValor;
 import smart.tools.api.mvp.smart.tools.controller.responses.ResumoLancamento;
 import smart.tools.api.mvp.smart.tools.controller.form.LancamentoForm;
 import smart.tools.api.mvp.smart.tools.model.Lancamento;
@@ -81,6 +82,12 @@ public class LancamentoController {
     public ResponseEntity periodo(String dataInicio, String dataFim){
         List<Lancamento> lancamentos = lancamentoRepository.findByResumoPeriodo(LocalDate.parse(dataInicio), LocalDate.parse(dataFim));
         return ResponseEntity.ok(lancamentos);
+    }
+
+    @GetMapping("/periodo-resumo")
+    public ResponseEntity periodoResumo(){
+        List<LancamentoDataValor> l = (List<LancamentoDataValor>) lancamentoService.resumoLancamentoDataValor();
+        return ResponseEntity.ok(l);
     }
 
     @GetMapping("/{id}")

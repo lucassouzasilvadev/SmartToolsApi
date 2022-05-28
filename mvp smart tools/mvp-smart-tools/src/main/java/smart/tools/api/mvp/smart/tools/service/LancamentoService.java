@@ -2,10 +2,13 @@ package smart.tools.api.mvp.smart.tools.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import smart.tools.api.mvp.smart.tools.controller.responses.LancamentoDataValor;
 import smart.tools.api.mvp.smart.tools.controller.responses.ResumoLancamento;
 import smart.tools.api.mvp.smart.tools.model.Lancamento;
 import smart.tools.api.mvp.smart.tools.model.TipoLancamento;
+import smart.tools.api.mvp.smart.tools.model.Usuario;
 import smart.tools.api.mvp.smart.tools.repository.LancamentoRepository;
+import smart.tools.api.mvp.smart.tools.repository.UsuarioRepository;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
@@ -17,6 +20,9 @@ public class LancamentoService {
 
     @Autowired
     private LancamentoRepository lancamentoRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Transactional
     public Lancamento criarEntrada(Lancamento lancamento){
@@ -48,8 +54,9 @@ public class LancamentoService {
     }
 
     public ResumoLancamento resumoLancamento(String dataRegistro) {
+        Usuario usuario = usuarioRepository.findById(UserService.authenticated().getId()).get();
         if (dataRegistro == null) {
-            List<Lancamento> lancamentos = lancamentoRepository.findAll();
+            List<Lancamento> lancamentos = lancamentoRepository.findByUsuario(usuario);
             Double totalReceitas = 0.0;
             Double totalDespesas = 0.0;
 
@@ -87,5 +94,24 @@ public class LancamentoService {
             }
         }
         return new ResumoLancamento(totalReceitas, totalDespesas);
+    }
+
+    public LancamentoDataValor resumoLancamentoDataValor(){
+        List<Lancamento> lancamentos = lancamentoRepository.findAll();
+        Integer id = 0;
+        Double valor = 0.0;
+        LocalDate data = null;
+        Boolean isDepesas = false;
+        for (Lancamento l : lancamentos){
+            id = l.getId();
+            valor = l.getValor();
+            data = l.getDataRegistro();
+            if (l.getTipoLancamento() == TipoLancamento.DESPESA){
+                isDepesas = true;
+            }
+        }
+
+        return new LancamentoDataValor(id, valor, data, isDepesas);
+
     }
 }

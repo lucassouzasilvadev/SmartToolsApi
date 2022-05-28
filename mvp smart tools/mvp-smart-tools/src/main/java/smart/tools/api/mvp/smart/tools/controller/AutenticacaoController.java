@@ -19,7 +19,6 @@ import smart.tools.api.mvp.smart.tools.controller.form.LoginForm;
 
 @RestController
 @RequestMapping("/autenticacao")
-@Profile("prod")
 public class AutenticacaoController {
 
     @Autowired
