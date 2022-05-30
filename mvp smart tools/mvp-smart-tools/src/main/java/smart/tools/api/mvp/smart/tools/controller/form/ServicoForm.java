@@ -33,13 +33,7 @@ public class ServicoForm {
         servico.setCategoria(categoria);
         servico.setVeiculo(veiculo);
 
-        Lancamento lancamento = new Lancamento();
-        lancamento.setTipoLancamento(TipoLancamento.RECEITA);
-        lancamento.setCategoria(categoria);
-        lancamento.setDescricao(this.descricao);
-        lancamento.setDataRegistro(LocalDate.now());
-        lancamento.setValor(this.valorServico);
-        lancamentoRepository.save(lancamento);
+
 
         return servico;
     }

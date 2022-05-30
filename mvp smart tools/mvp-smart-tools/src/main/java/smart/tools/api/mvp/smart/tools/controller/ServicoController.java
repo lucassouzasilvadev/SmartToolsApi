@@ -6,13 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import smart.tools.api.mvp.smart.tools.controller.form.AtualizarServicoForm;
 import smart.tools.api.mvp.smart.tools.controller.form.ServicoForm;
-import smart.tools.api.mvp.smart.tools.model.Servico;
-import smart.tools.api.mvp.smart.tools.repository.CategoriaRepository;
-import smart.tools.api.mvp.smart.tools.repository.LancamentoRepository;
-import smart.tools.api.mvp.smart.tools.repository.ServicoRepository;
-import smart.tools.api.mvp.smart.tools.repository.VeiculoRepository;
+import smart.tools.api.mvp.smart.tools.model.*;
+import smart.tools.api.mvp.smart.tools.repository.*;
 import smart.tools.api.mvp.smart.tools.service.ServicoService;
+import smart.tools.api.mvp.smart.tools.service.UserService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -35,9 +34,22 @@ public class ServicoController {
     @Autowired
     private ServicoService servicoService;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     @PostMapping
     public ResponseEntity novoServico(@RequestBody ServicoForm servicoForm){
         Servico novoServico = servicoForm.converter(veiculoRepository, categoriaRepository, lancamentoRepository);
+        Lancamento lancamento = new Lancamento();
+        Categoria categoria = categoriaRepository.findByNome(servicoForm.getCategoria());
+        lancamento.setTipoLancamento(TipoLancamento.RECEITA);
+        lancamento.setCategoria(categoria);
+        lancamento.setDescricao(servicoForm.getDescricao());
+        lancamento.setDataRegistro(LocalDate.now());
+        lancamento.setValor(servicoForm.getValorServico());
+        Usuario usuario = usuarioRepository.findById(UserService.authenticated().getId()).get();
+        lancamento.setUsuario(usuario);
+        lancamentoRepository.save(lancamento);
         servicoRepository.save(novoServico);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoServico);
     }
@@ -57,5 +69,16 @@ public class ServicoController {
         servicoRepository.save(servico);
         return ResponseEntity.ok(servico);
     }
+
+//    @GetMapping("/consulta-cliente")
+//    public ResponseEntity consultaServicoCliente(String placaVeiculo){
+//        Servico servico = servicoRepository.findByVeiculo_placaVeiculo(placaVeiculo);
+//        if (servicoRepository.existsById(servico.getId())){
+//            return ResponseEntity.ok(servico);
+//        }
+//        return ResponseEntity.notFound().build();
+//    }
+
+
 
 }

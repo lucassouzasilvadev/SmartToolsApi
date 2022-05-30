@@ -1,8 +1,6 @@
 package smart.tools.api.mvp.smart.tools.model;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 import javax.persistence.*;
@@ -15,6 +13,8 @@ import java.util.Optional;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@Getter
+@Setter
 public class Lancamento {
 
     @Id

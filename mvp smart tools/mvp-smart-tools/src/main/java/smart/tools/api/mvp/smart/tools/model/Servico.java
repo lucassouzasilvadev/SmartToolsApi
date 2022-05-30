@@ -43,6 +43,4 @@ public class Servico {
     @JsonBackReference
     private Veiculo veiculo;
 
-
-
 }
