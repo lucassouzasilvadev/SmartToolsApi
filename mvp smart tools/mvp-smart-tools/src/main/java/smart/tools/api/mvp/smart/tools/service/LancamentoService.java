@@ -59,6 +59,9 @@ public class LancamentoService {
             List<Lancamento> lancamentos = lancamentoRepository.findByUsuario(usuario);
             Double totalReceitas = 0.0;
             Double totalDespesas = 0.0;
+            if (lancamentos.isEmpty()){
+                return null;
+            }
 
             for (Lancamento lancamento : lancamentos) {
                 if (lancamento.getTipoLancamento() == TipoLancamento.DESPESA) {

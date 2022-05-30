@@ -74,6 +74,9 @@ public class LancamentoController {
     @GetMapping("/resumo")
     public ResponseEntity resumo(String dataRegistro){
             ResumoLancamento resumoLancamento = lancamentoService.resumoLancamento(dataRegistro);
+            if (resumoLancamento == null){
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
             return ResponseEntity.status(200).body(resumoLancamento);
     }
 
