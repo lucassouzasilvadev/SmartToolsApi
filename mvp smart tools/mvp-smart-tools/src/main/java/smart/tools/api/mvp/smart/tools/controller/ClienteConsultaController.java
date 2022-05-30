@@ -28,7 +28,7 @@ public class ClienteConsultaController {
     public ResponseEntity consultaServicoCliente(String placaVeiculo){
         Optional<Servico> servico = servicoRepository.findByVeiculoPlacaVeiculo(placaVeiculo);
         if (servico.isEmpty()){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(servico);
     }
