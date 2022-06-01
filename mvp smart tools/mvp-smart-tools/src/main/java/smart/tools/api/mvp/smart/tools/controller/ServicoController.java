@@ -39,7 +39,7 @@ public class ServicoController {
 
     @PostMapping
     public ResponseEntity novoServico(@RequestBody ServicoForm servicoForm){
-        Servico novoServico = servicoForm.converter(veiculoRepository, categoriaRepository, lancamentoRepository);
+        Servico novoServico = servicoForm.converter(veiculoRepository, categoriaRepository, lancamentoRepository, usuarioRepository);
         Lancamento lancamento = new Lancamento();
         Categoria categoria = categoriaRepository.findByNome(servicoForm.getCategoria());
         lancamento.setTipoLancamento(TipoLancamento.RECEITA);

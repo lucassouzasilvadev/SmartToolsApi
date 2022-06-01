@@ -5,7 +5,10 @@ import lombok.Setter;
 import smart.tools.api.mvp.smart.tools.model.*;
 import smart.tools.api.mvp.smart.tools.repository.CategoriaRepository;
 import smart.tools.api.mvp.smart.tools.repository.LancamentoRepository;
+import smart.tools.api.mvp.smart.tools.repository.UsuarioRepository;
 import smart.tools.api.mvp.smart.tools.repository.VeiculoRepository;
+import smart.tools.api.mvp.smart.tools.service.UserService;
+
 import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -21,8 +24,9 @@ public class ServicoForm {
 
     private String placa;
 
-    public Servico converter(VeiculoRepository veiculoRepository, CategoriaRepository categoriaRepository, LancamentoRepository lancamentoRepository){
+    public Servico converter(VeiculoRepository veiculoRepository, CategoriaRepository categoriaRepository, LancamentoRepository lancamentoRepository, UsuarioRepository usuarioRepository){
         Veiculo veiculo = veiculoRepository.findByPlacaVeiculo(this.placa);
+        Usuario usuario = usuarioRepository.findById(UserService.authenticated().getId()).get();
         Categoria categoria = categoriaRepository.findByNome(this.categoria);
         Servico servico = new Servico();
         servico.setDataServico(LocalDate.now());
@@ -32,8 +36,7 @@ public class ServicoForm {
         servico.setDescricao(descricao);
         servico.setCategoria(categoria);
         servico.setVeiculo(veiculo);
-
-
+        servico.setUsuario(usuario);
 
         return servico;
     }
