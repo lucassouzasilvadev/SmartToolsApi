@@ -39,6 +39,9 @@ public class Servico {
     private Categoria categoria;
 
     @ManyToOne
+    private Usuario usuario;
+
+    @ManyToOne
     @JoinColumn(name = "id_cliente")
     @JsonBackReference
     private Veiculo veiculo;

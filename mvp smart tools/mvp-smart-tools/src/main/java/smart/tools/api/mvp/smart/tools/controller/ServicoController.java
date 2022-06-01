@@ -56,7 +56,8 @@ public class ServicoController {
 
     @GetMapping
     public ResponseEntity buscar(){
-        List<Servico> servicos =  servicoRepository.findAll();
+        Usuario usuario = usuarioRepository.findById(UserService.authenticated().getId()).get();
+        List<Servico> servicos =  servicoRepository.findByUsuario(usuario);
         if (servicos.isEmpty()){
             return ResponseEntity.noContent().build();
         }
